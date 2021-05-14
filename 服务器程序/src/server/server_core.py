@@ -9,8 +9,8 @@ from os import listdir, remove
 from os.path import getsize, isfile, join
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from server.key import encrypt
-from server.ch_protocol import dump, parse
+from key import encrypt
+from ch_protocol import dump, parse
 
 
 class Server(QObject):

@@ -4,8 +4,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import (QWidget, QApplication, QGroupBox, QPushButton, QLabel, QHBoxLayout,
                              QVBoxLayout, QGridLayout, QFormLayout, QLineEdit, QTextBrowser,
                              QFileDialog, QComboBox, QMessageBox, QStackedWidget)
-
-from server import server_core
+import server_core
 
 info = '''
 说明：
