@@ -6,7 +6,7 @@ from os import remove
 from threading import Thread, Lock
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from client.ch_protocol import dump, parse
+from ch_protocol import dump, parse
 
 
 class Client(QObject):
