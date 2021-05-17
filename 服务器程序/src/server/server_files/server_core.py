@@ -25,7 +25,6 @@ class Server(QObject):
         self.path = path    # 工作文件夹路径
         self.cnum = 0   # 已连接用户数
         self.num = num  # 最大连接数
-        self.uprs = {}
         # if host == 'localhost':
         #     host = socket.gethostname()
         self.socket.bind((host, port))   # 绑定端口
@@ -114,17 +113,6 @@ class Server(QObject):
         fmd5 = cnt['fmd5']  # 获取MD5值
         data = {'type': 'sendf', 'cnt': {}}  # 构建命令
 
-        # 检查特权级
-        if self.uprs[ur] == 'user':
-            data['cnt']['result'] = False
-            msg = fname + '发送失败！'
-            data['cnt']['msg'] = msg    # 发送失败信息
-            now = time.strftime('%H:%M:%S')
-            self.statSignal.emit('[' + now + ']【' +
-                                 ur + '】：' + msg)    # 更新服务器日志
-            q.put(data)  # 将命令送给发送线程
-            return
-
         dsize = 0   # 已接收文件大小
         dmd5 = hashlib.md5()
 
@@ -136,7 +124,7 @@ class Server(QObject):
                 dmd5.update(block)
                 dsize += len(block)  # 更新已接收文件大小
 
-        # 校验文件和特权级 若特权级不够 则不许上传
+        # 校验文件
         if fmd5 == dmd5.hexdigest():
             # 发送成功接收信息
             data['cnt']['result'] = True
@@ -210,7 +198,6 @@ class Server(QObject):
             sql = "SELECT pr FROM usr WHERE ur = '" + dur + "'"
             cursor.execute(sql)
             rpr = cursor.fetchone()
-            self.uprs[ur] = rpr
             print("fff", rpw)
             if rpw:
                 print(rpw)
@@ -220,8 +207,13 @@ class Server(QObject):
                 if dpw == rpw and ur not in self.users:
                     msg = '登录成功!'+rpr
                     data['cnt']['result'] = True  # 返回正确信息
-                    data['cnt']['flist'] = [f for f in listdir(
-                        self.path) if isfile(join(self.path, f))]  # 发送服务器文件列表
+                    # 若特权级为user 则不返回文件列表
+                    if rpr == 'user':
+                        data['cnt']['flist'] = []
+                    else:
+                        data['cnt']['flist'] = [f for f in listdir(
+                            self.path) if isfile(join(self.path, f))]  # 发送服务器文件列表
+                        print(data['cnt']['flist'])
                     self.users[ur] = q  # 为该用户建立消息传输队列
                     self.lgSignal.emit(ur)  # 更新日志已消息框可选用户列表
 
