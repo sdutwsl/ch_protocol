@@ -6,7 +6,7 @@ from os import remove
 from threading import Thread, Lock
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from ch_protocol import dump, parse
+from client.ch_protocol import dump, parse
 
 
 class Client(QObject):
@@ -184,8 +184,7 @@ class Client(QObject):
             self.lgSignal.emit(cnt['result'])
             if cnt['result']:
                 time.sleep(1)
-                if 'flist' in cnt:
-                    self.uplistSignal.emit(cnt['flist'])    # 更新服务器端文件列表
+                self.uplistSignal.emit(cnt['flist'])    # 更新服务器端文件列表
         elif tp == 'rgs':   # 发送注册结果
             self.statSignal.emit(cnt['msg'])
             self.rgsSignal.emit(cnt['result'])

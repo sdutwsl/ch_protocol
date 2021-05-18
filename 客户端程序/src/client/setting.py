@@ -4,7 +4,7 @@ import sys
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QApplication
 
-from main_form import MForm
+from client.main_form import MForm
 
 
 class Setting(QWidget):

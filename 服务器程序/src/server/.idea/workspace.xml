@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e4235de9-7976-48f6-adf1-684ee063ded5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/ch_protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../客户端程序/src/client/ch_protocol.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_boot.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../客户端程序/src/client/client_boot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../客户端程序/src/client/client_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/client_boot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/client_core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/client_form.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/dd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/fdsf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/main_form.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/register.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/setting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/client_files/新建文本文档.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/main_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../客户端程序/src/client/main_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../客户端程序/src/client/setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../客户端程序/src/client/setting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts.db" beforeDir="false" afterPath="$PROJECT_DIR$/accounts.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ch_protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/ch_protocol.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chftp.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_form.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/c.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/key.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/register.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/server.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/server_core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/server_form.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_files/setting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_form.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1shfDn8iLN6AgHxBk1vORqTgB4b" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e4235de9-7976-48f6-adf1-684ee063ded5" name="Default Changelist" comment="" />
+      <created>1621329627219</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1621329627219</updated>
+      <workItem from="1621329628761" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

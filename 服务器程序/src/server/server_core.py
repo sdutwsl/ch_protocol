@@ -9,8 +9,8 @@ from os import listdir, remove
 from os.path import getsize, isfile, join
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from key import encrypt
-from ch_protocol import dump, parse
+from server.key import encrypt
+from server.ch_protocol import dump, parse
 
 
 class Server(QObject):
@@ -25,19 +25,19 @@ class Server(QObject):
         self.path = path    # 工作文件夹路径
         self.cnum = 0   # 已连接用户数
         self.num = num  # 最大连接数
-        self.uprs = {}
         # if host == 'localhost':
         #     host = socket.gethostname()
         self.socket.bind((host, port))   # 绑定端口
 
         self.socket.listen(num + 1)
-        self.users = {}  # 已连接用户字典
-
+        self.users = {} # 已连接用户字典
+    
     # 主线程
     def run(self):
         # 打印启动信息
         now = time.strftime('%H:%M:%S')
         self.statSignal.emit('[' + now + ']: 服务器已启动！')
+
 
         while True:
             clientsocket, addr = self.socket.accept()   # 每接收到一个连接请求
@@ -62,10 +62,10 @@ class Server(QObject):
             head_dic = self.deread(c)   # 接收报头
             tp = head_dic['type']   # 提起报头的命令
 
-            if tp == 'end':  # 如果要求结束
-                q.put(head_dic)  # 将其传递给发送线程并跳出
+            if tp == 'end': # 如果要求结束
+                q.put(head_dic) # 将其传递给发送线程并跳出
                 break
-            else:
+            else:   
                 cnt = head_dic['cnt']   # 提取命令内容
 
             if tp == 'lg':  # 要求登录则调用登录处理方法
@@ -75,21 +75,20 @@ class Server(QObject):
             elif tp == 'msg':
                 # 对消息的处理
                 now = time.strftime('%H:%M:%S')
-                self.msgSignal.emit(
-                    cnt['ur'], cnt['ur'] + '(' + now + '):' + cnt['msg'])   # 更新消息栏
+                self.msgSignal.emit(cnt['ur'], cnt['ur'] + '(' + now + '):' + cnt['msg'])   # 更新消息栏
             elif tp == 'dwnf':
-                q.put(head_dic)  # 要求下载文件将命令传递给发送线程
+                q.put(head_dic) # 要求下载文件将命令传递给发送线程
             elif tp == 'sendf':
                 self.recf(c, cnt, q)    # 要求发送文件则调用接收文件处理方法
 
-    # 发送线程
+    # 发送线程    
     def csend(self, clientsocket, addr, q):
         while True:
             data = q.get()  # 获取接收线程的信息
             if data['type'] == 'dwnf':    # 用户请求下载文件
-                self.sendf(clientsocket, data)  # 调用发送文件的处理方法
+                self.sendf(clientsocket, data) # 调用发送文件的处理方法
 
-            elif data['type'] == 'end':  # 要求退出
+            elif data['type'] == 'end': # 要求退出
                 print(data)
                 # 打印退出日志信息并跳出循环
                 if 'cnt' in data and 'ur' in data['cnt']:
@@ -112,18 +111,7 @@ class Server(QObject):
         fsize = cnt['fsize']    # 获取文件大小
         fname = cnt['fname']    # 获取文件名
         fmd5 = cnt['fmd5']  # 获取MD5值
-        data = {'type': 'sendf', 'cnt': {}}  # 构建命令
-
-        # 检查特权级
-        if self.uprs[ur] == 'user':
-            data['cnt']['result'] = False
-            msg = fname + '发送失败！'
-            data['cnt']['msg'] = msg    # 发送失败信息
-            now = time.strftime('%H:%M:%S')
-            self.statSignal.emit('[' + now + ']【' +
-                                 ur + '】：' + msg)    # 更新服务器日志
-            q.put(data)  # 将命令送给发送线程
-            return
+        data = {'type': 'sendf', 'cnt': {}} # 构建命令
 
         dsize = 0   # 已接收文件大小
         dmd5 = hashlib.md5()
@@ -134,14 +122,13 @@ class Server(QObject):
                 block = c.recv(1024)
                 f.write(block)
                 dmd5.update(block)
-                dsize += len(block)  # 更新已接收文件大小
-
-        # 校验文件和特权级 若特权级不够 则不许上传
+                dsize += len(block) # 更新已接收文件大小
+        
+        # 校验文件
         if fmd5 == dmd5.hexdigest():
             # 发送成功接收信息
             data['cnt']['result'] = True
-            data['cnt']['flist'] = [f for f in listdir(
-                self.path) if isfile(join(self.path, f))]
+            data['cnt']['flist'] = [ f for f in listdir(self.path) if isfile(join(self.path, f)) ]
             msg = fname + '发送成功！'
 
         else:
@@ -152,8 +139,8 @@ class Server(QObject):
         data['cnt']['msg'] = msg    # 发送失败信息
         now = time.strftime('%H:%M:%S')
         self.statSignal.emit('[' + now + ']【' + ur + '】：' + msg)    # 更新服务器日志
-
-        q.put(data)  # 将命令送给发送线程
+        
+        q.put(data) # 将命令送给发送线程
 
     # 发送用户下载的文件
     def sendf(self, c, data):
@@ -172,8 +159,8 @@ class Server(QObject):
             while dsize < fsize:
                 block = f.read(1024)
                 c.send(block)
-                dsize += len(block)  # 更新发送文件大小
-
+                dsize += len(block) # 更新发送文件大小
+        
         msg = fname + '发送完毕！'
         now = time.strftime('%H:%M:%S')
         self.statSignal.emit('[' + now + ']【' + ur + '】：' + msg)    # 更新日志信息
@@ -205,23 +192,14 @@ class Server(QObject):
 
             cursor.execute(sql)
             rpw = cursor.fetchone()
-
-            # SQL查询该用户的特权级
-            sql = "SELECT pr FROM usr WHERE ur = '" + dur + "'"
-            cursor.execute(sql)
-            rpr = cursor.fetchone()
-            self.uprs[ur] = rpr
-            print("fff", rpw)
+            print("fff",rpw)
             if rpw:
-                print(rpw)
                 rpw = rpw[0]
-                rpr = rpr[0]
                 # 只有密码正确且该用户没有登录时
                 if dpw == rpw and ur not in self.users:
-                    msg = '登录成功!'+rpr
+                    msg = '登录成功!'
                     data['cnt']['result'] = True  # 返回正确信息
-                    data['cnt']['flist'] = [f for f in listdir(
-                        self.path) if isfile(join(self.path, f))]  # 发送服务器文件列表
+                    data['cnt']['flist'] = [f for f in listdir(self.path) if isfile(join(self.path, f))]  # 发送服务器文件列表
                     self.users[ur] = q  # 为该用户建立消息传输队列
                     self.lgSignal.emit(ur)  # 更新日志已消息框可选用户列表
 
@@ -239,11 +217,11 @@ class Server(QObject):
                 data['cnt']['result'] = False  # 返回错误信息
 
             now = time.strftime('%H:%M:%S')
-            self.statSignal.emit('[' + now + ']【' + ur + '】：' + msg)  # 更新日志
+            self.statSignal.emit('['+ now +']【' + ur + '】：' + msg)  # 更新日志
             db.close()  # 关闭数据库
 
         data['cnt']['msg'] = msg  # 设置返回信息
-        q.put(data)  # 发送登录结果
+        q.put(data) # 发送登录结果
 
     # 用户注册
     def rgs(self, cnt, q):
@@ -260,6 +238,7 @@ class Server(QObject):
         dur = encrypt(13, ur)
         dpw = encrypt(13, pw)
 
+
         # 使用SQL语句来查询该用户
         sql = "SELECT * FROM usr WHERE ur = '" + dur + "'"
 
@@ -273,8 +252,7 @@ class Server(QObject):
             data['cnt']['result'] = False   # 返回错误信息
         else:
             msg = '注册成功！'
-            csql = "INSERT INTO usr VALUES ('%s', '%s','user')" % (
-                dur, dpw)    # 加入该用户
+            csql = "INSERT INTO usr VALUES ('%s', '%s')" %(dur, dpw)    # 加入该用户
             cursor.execute(csql)
             db.commit()
             data['cnt']['result'] = True    # 返回成功信息
@@ -285,7 +263,7 @@ class Server(QObject):
 
         db.close()  # 关闭数据库
 
-        q.put(data)  # 返回消息
+        q.put(data) # 返回消息
 
     # 将收到的信息转化为报头
     def deread(self, c):
@@ -310,7 +288,7 @@ class Server(QObject):
 
         # 发送报头
         c.send(head_bytes)
-
+    
     # 获取文件MD5值
     def getMD5(self, cnt):
         fname = cnt['fname']    # 发送文件名

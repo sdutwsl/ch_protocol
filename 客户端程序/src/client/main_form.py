@@ -1,8 +1,8 @@
-from login import Login
-from client_form import CForm
+from client.login import Login
+from client.client_form import CForm
 from queue import Queue
-from client_core import Client
-from register import Regis
+from client.client_core import Client
+from client.register import Regis
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import pyqtSignal, QThread, QCoreApplication
 

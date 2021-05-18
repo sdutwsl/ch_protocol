@@ -4,9 +4,9 @@ import sys
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication
 
-from main_form import MForm
+from client.main_form import MForm
 
-from setting import Setting
+from client.setting import Setting
 
 if __name__ == '__main__':
     QCoreApplication.addLibraryPath('.')

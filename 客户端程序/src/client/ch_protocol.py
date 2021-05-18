@@ -17,7 +17,6 @@ Type = {
 
 
 def dump(data):
-    print(data)
     packed_data = bytearray()
     packed_data += struct.pack('B', Type[data['type']])
     cnt_flag = bytearray(7)
@@ -114,7 +113,7 @@ def parse(data):
 
     if len(data) - analog >= 1:
         parse_result['cnt']['path'] = data[analog:].decode('utf8')
-    print(parse_result)
+
     return parse_result
 
 
